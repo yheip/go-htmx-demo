@@ -5,5 +5,6 @@ import "github.com/go-chi/chi/v5"
 func AddRoutes(router chi.Router) {
 	handler := Handler{}
 
-	router.Get("/", handler.Hello)
+	router.Get("/", handler.Home)
+	router.Get("/hello", handler.Hello)
 }

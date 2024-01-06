@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HTMX demo</title>
+        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+        <style>
+          h1 {
+            text-align: center;
+          }
+
+          .box {
+            padding: 1pm;
+            margin: 1pm;
+            border: 1px solid #CCC;
+          }
+        </style>
+    </head>
+    <body>
+        <h1>HTMX demo</h1>
+        <div id="data" class="box">Test</div>
+        <button hx-get="/hello" hx-target="#data" hx-swap="innerHTML">
+            Click Me
+        </button>
+    </body>
+</html>
