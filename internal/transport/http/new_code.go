@@ -3,12 +3,15 @@ package http
 import (
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/rs/zerolog"
 	qrcode "github.com/skip2/go-qrcode"
 )
+
+type CodeViewData struct {
+	Base64Code string
+}
 
 type NewCodeRequest struct {
 	Value string `json:"value"`
@@ -28,5 +31,10 @@ func (h *Handler) NewCode(w http.ResponseWriter, r *http.Request) {
 		log.Error().Err(err).Msg("error generating code")
 	}
 
-	w.Write([]byte(fmt.Sprintf(`<img src="data:image/png;base64, %s"/>`, base64.RawStdEncoding.EncodeToString(png))))
+	err = h.template.ExecuteTemplate(w, "code.html", CodeViewData{
+		Base64Code: base64.RawStdEncoding.EncodeToString(png),
+	})
+	if err != nil {
+		log.Error().Err(err).Msg("template execute failed")
+	}
 }
