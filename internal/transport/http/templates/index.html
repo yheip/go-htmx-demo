@@ -5,6 +5,7 @@
         <title>HTMX demo</title>
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
         <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
+        <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
         <style>
          h1 {
              text-align: center;
@@ -16,6 +17,19 @@
              border: 1px solid #CCC;
          }
         </style>
+        <script>
+         function buf2hex(buffer) { // buffer is an ArrayBuffer
+            return [...new Uint8Array(buffer)]
+                .map(x => x.toString(16).padStart(2, '0'))
+                .join('');
+         }
+
+         function RandomValue() {
+             const array = new Uint8Array(16);
+             crypto.getRandomValues(array);
+             return buf2hex(array)
+         }
+        </script>
     </head>
     <body>
         <h1>HTMX demo</h1>
@@ -24,6 +38,14 @@
         <button hx-get="/hello" hx-target="#data" hx-swap="innerHTML">
             Click Me
         </button>
+        <p>POST JSON on load</p>
+        <div hx-trigger="load"
+             hx-post="/code"
+             hx-vals='js:{value: RandomValue()}'
+             hx-ext='json-enc'
+             class="box">
+            ...
+        </div>
         <p>Server Sent Events (SSE)</p>
         <div hx-ext="sse" sse-connect="/sse">
             <p>Receiving Named Events</p>

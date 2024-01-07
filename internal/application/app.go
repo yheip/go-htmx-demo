@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/rs/zerolog"
 	"golang.org/x/sync/errgroup"
 )
@@ -20,6 +21,7 @@ type Application struct {
 func New(ctx context.Context) *Application {
 	router := chi.NewRouter()
 
+	router.Use(middleware.Logger)
 	http.AddRoutes(router)
 
 	return &Application{
