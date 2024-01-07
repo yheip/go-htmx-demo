@@ -4,23 +4,42 @@
         <meta charset="utf-8">
         <title>HTMX demo</title>
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+        <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
         <style>
-          h1 {
-            text-align: center;
-          }
+         h1 {
+             text-align: center;
+         }
 
-          .box {
-            padding: 1pm;
-            margin: 1pm;
-            border: 1px solid #CCC;
-          }
+         .box {
+             padding: 1pm;
+             margin: 1pm;
+             border: 1px solid #CCC;
+         }
         </style>
     </head>
     <body>
         <h1>HTMX demo</h1>
+        <p>Get request</p>
         <div id="data" class="box">Test</div>
         <button hx-get="/hello" hx-target="#data" hx-swap="innerHTML">
             Click Me
         </button>
+        <p>Server Sent Events (SSE)</p>
+        <div hx-ext="sse" sse-connect="/sse">
+            <p>Receiving Named Events</p>
+            <div sse-swap="counter" class="box">
+                ...
+            </div>
+            <p>Receiving Unnamed Events</p>
+            <div sse-swap="message" class="box">
+                ...
+            </div>
+            <p>Trigger Server Callbacks</p>
+            <div hx-get="/hello" hx-trigger="sse:say_hello">
+                ...
+            </div>
+        </div>
+
+        </body>
     </body>
 </html>
