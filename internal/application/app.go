@@ -28,6 +28,7 @@ func New(ctx context.Context) *Application {
 		server: httpserver.New(
 			ctx,
 			httpserver.WithHandler(router),
+			httpserver.WithTimeout(0, 0),
 		),
 	}
 }
