@@ -33,12 +33,12 @@
     </head>
     <body>
         <h1>HTMX demo</h1>
-        <p>Get request</p>
+        <h2>Get request</h2>
         <div id="data" class="box">Test</div>
         <button hx-get="/hello" hx-target="#data" hx-swap="innerHTML">
             Click Me
         </button>
-        <p>POST JSON on load</p>
+        <h2>POST JSON on load</p>
         <div hx-trigger="load"
              hx-post="/code"
              hx-vals='js:{value: RandomValue()}'
@@ -46,7 +46,26 @@
              class="box">
             ...
         </div>
-        <p>Server Sent Events (SSE)</p>
+        <h2>Polling</h2>
+        <div id="polling" hx-get="/poll"
+             hx-trigger="every 2s"
+             class="box">
+            ...
+        </div>
+
+        <h3>Trigger by HX-Trigger header</h3>
+        <div hx-get="/update"
+             hx-trigger="getupdate from:#polling"
+             class="box">
+            ...
+        </div>
+
+        <h2>Client side redirect</h2>
+        <button hx-get="/redirect">
+            Redirect Me
+        </button>
+
+        <h2>Server Sent Events (SSE)</h2>
         <div hx-ext="sse" sse-connect="/sse">
             <p>Receiving Named Events</p>
             <div sse-swap="counter" class="box">
@@ -61,7 +80,6 @@
                 ...
             </div>
         </div>
-
         </body>
     </body>
 </html>
